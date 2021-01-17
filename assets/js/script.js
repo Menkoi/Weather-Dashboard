@@ -1,8 +1,32 @@
+var searchHistory = [];
+
+function getItems() {
+    var storedCities = JSON.parse(localStorage.getItem("searchHistory"));
+    if (storedCities !== null) {
+        searchHistory = storedCities;
+    };
+     // lists up to 8 locations
+    for (i = 0; i < searchHistory.length; i++) {
+        if (i == 8) {
+            break;
+          }
+        cityListButton = $("<a>").attr({
+            class: "list-group-item list-group-item-action",
+            href: "#"
+        });
+        cityListButton.text(searchHistory[i]);
+        $(".list-group").append(cityListButton);
+    }
+};
+
+getItems();
+
 
 $('#searchBox').on('click', function() {
     value = document.getElementById("city").value;
     console.log(value);
     var obj;
+   
 
 fetch("https://api.openweathermap.org/data/2.5/weather?q=" + value + "&appid=ab27f177782f621190cdae30ab462244")
 .then(res => res.json())
@@ -13,7 +37,7 @@ fetch("https://api.openweathermap.org/data/2.5/weather?q=" + value + "&appid=ab2
 });
 
 function search(event) {
-    event.preventDefault();
+    //event.preventDefault();
 
   request = $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather",
@@ -43,7 +67,7 @@ function formatSearch(jsonObject) {
     $("#city-wind").text("Wind Speed" + ":" + " " + city_wind + " " + "MPH");
 
 
-// 5 day forcast 
+// 5 day forecast 
 $.ajax({
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city_name + "&appid=ab27f177782f621190cdae30ab462244", 
     method: "GET"
@@ -64,8 +88,34 @@ $.ajax({
 
         var humidity = response.list[i * 8].main.humidity;
         newCard.append($("<p>").html("Humidity: " + humidity)); 
+       
     }
 });
 
 };
+
+$("#searchBox").click(function() {
+    city = $("#city").val().trim();
+    search();
+    var checkArray = searchHistory.includes(city);
+    if (checkArray == true) {
+        return
+    }
+    else {
+        searchHistory.push(city);
+        localStorage.setItem(searchHistory, JSON.stringify("searchHistory"));
+        var cityListButton = $("<a>").attr({
+            // list-group-item-action keeps the search history buttons consistent
+            class: "list-group-item list-group-item-action",
+            href: "#"
+        });
+        cityListButton.text(city);
+        $(".list-group").append(cityListButton);
+        
+    };
+});
+$(".list-group-item").click(function() {
+    city = $(this).text();
+    search();
+});
 
