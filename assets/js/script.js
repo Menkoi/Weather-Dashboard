@@ -33,11 +33,12 @@ fetch("https://api.openweathermap.org/data/2.5/weather?q=" + value + "&appid=ab2
   .then(data => obj = data)
   .then(() => console.log(obj))
 
-  search(event);
+  
 });
 
 function search(event) {
     //event.preventDefault();
+    $("#weeklyForecast").empty();
 
   request = $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather",
@@ -73,7 +74,7 @@ $.ajax({
     method: "GET"
 }).then(function (response) {
     for (i = 0; i < 5; i++) {
-        var newCard = $("<div>").attr("class", "col fiveDay bg-primary text-white rounded-lg p-2");
+        var newCard = $("<div>").attr("class", " card fiveDay bg-primary text-white rounded-lg p-2");
         $("#weeklyForecast").append(newCard);
 
         var myDate = new Date(response.list[i * 8].dt * 1000);
@@ -103,7 +104,7 @@ $("#searchBox").click(function() {
     }
     else {
         searchHistory.push(city);
-        localStorage.setItem(searchHistory, JSON.stringify("searchHistory"));
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
         var cityListButton = $("<a>").attr({
             // list-group-item-action keeps the search history buttons consistent
             class: "list-group-item list-group-item-action",
@@ -114,8 +115,5 @@ $("#searchBox").click(function() {
         
     };
 });
-$(".list-group-item").click(function() {
-    city = $(this).text();
-    search();
-});
+
 
