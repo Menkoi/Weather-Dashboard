@@ -15,30 +15,41 @@
 </head>
 
 <body>
-    
+    <header class="bg-dark">
+        <h1 class="bg-dark text-white display-6 align-text-middle">Weather Dashboard</h1>
+    </header> 
 
+    <!-- search box-->
+    <div class="row">
+        <div class="col-4 bg-light">
+            <div class="mt-2">Search for a City:</div>
+            <div class="input-group mb-3">
+                <input type="text" id="city" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="searchBox"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <div class="list-group"></div>
+        </div>
+        <!-- main card -->
+        <div class="col-12 col-md-8 border-danger">
+            <h1 class="subtitle"><span id="city-name"></span></h1>
+            <h2 id="city-temp"></h2>
+            <h2 id="city-hum"></h2>
+            <h2 id="city-wind"></h2>
+            <h2 id="city-weather"></h2>
 
+            <div class="row">
+                <h4>5-Day Forecast:</h4>
+            </div>
+        <!-- five day -->
+        <div id="weeklyForecast" class="row"></div>
+        </div>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="./assets/js/script.js"></script>
 </html>
